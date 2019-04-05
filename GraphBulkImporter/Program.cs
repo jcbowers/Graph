@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphBulkImporter
 {
@@ -10,6 +6,18 @@ namespace GraphBulkImporter
     {
         static void Main(string[] args)
         {
+            var presenter = new Presenter();
+
+            var context = new ETLContext(
+                new GraphExtractor(),
+                new GraphTransformer(),
+                new GraphMLLoader(),
+                presenter);
+
+            context.RunAsync().Wait();
+
+            presenter.WriteLine("Done");
+            Console.ReadKey();
         }
     }
 }
